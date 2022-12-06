@@ -1,5 +1,5 @@
 # RigobikeshopNg
-
+![NgFront](https://github.com/gregdorian/RigoBikeShop_ng/blob/master/frontendAngular.png)
 Este proyecto se generó con [Angular CLI](https://github.com/angular/angular-cli) versión 15.0.2.
 
 ## Servidor de desarrollo
