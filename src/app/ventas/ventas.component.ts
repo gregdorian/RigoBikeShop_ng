@@ -22,7 +22,8 @@ export class VentasComponent implements OnInit {
   nomCliente: string | undefined;
   dirCliente: string | undefined;
   telCliente: string | undefined;
-
+  selProd: any;
+  precioUnitario: number | undefined;
 
 constructor( public service: VentasService, private formBuilder: FormBuilder)
   {
@@ -70,14 +71,22 @@ constructor( public service: VentasService, private formBuilder: FormBuilder)
     this.nomCliente = ob?.nombreCliente;
     this.dirCliente = ob?.direccionCliente;
     this.telCliente = ob?.telefonoCliente;
-    console.log(ob?.nombreCliente,ob?.direccionCliente , ob?.telefonoCliente);
+
+}
+onChangeProd(){
+  var selectedProdId =this.selProd;
+
+  var ob= this.products.find(item => item.idProducto === parseInt(selectedProdId));
+
+  this.precioUnitario = ob?.precioUnitario;
+
 }
 
   Agregar(ventaItemsIndex:number, ventaId: number){
     var vi= ventaItemsIndex;
     var idv= ventaId;
-
-    this.formItems.total = this.formItems.precioUnitario * this.formItems.cantidad;
+   if(this.precioUnitario!=null && this.formItems.cantidad!=0)
+       this.formItems.total = this.precioUnitario * this.formItems.cantidad;
  }
 // Agregar(){}
  Registrar(){

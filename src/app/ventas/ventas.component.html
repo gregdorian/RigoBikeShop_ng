@@ -42,14 +42,14 @@
         <div class="row align-items-end">
           <div class="col-sm-3">
             <label class="form-label">Nombre Producto</label>
-            <select class="form-select">
-              <option name="nombreProducto" [value]="item" *ngFor="let item of products">{{item.nombreProducto}}
+            <select class="form-select" name="selProd" (change)="onChangeProd()" [(ngModel)]="selProd">
+              <option name="nombreProducto" value="{{item.idProducto}}" *ngFor="let item of products">{{item.nombreProducto}}
               </option>
             </select>
           </div>
           <div class="col-sm-3">
             <label class="form-label">Precio</label>
-            <input class="form-control form-control-sm" #Precio="ngModel" [(ngModel)]="formItems.precioUnitario" type="number" name="precioUnitario"  />
+            <input class="form-control form-control-sm" #Precio="ngModel" [(ngModel)]="precioUnitario" type="number" name="precioUnitario"  />
           </div>
           <div class="col-sm-3">
             <label class="form-label">Cantidad</label>
