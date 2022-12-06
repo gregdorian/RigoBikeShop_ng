@@ -1,0 +1,111 @@
+<form #formv="ngForm" autocomplete="off" *ngIf="service.formData">
+  <!-- <form   > (submit)="onSubmit(form)" -->
+  <div class="card">
+    <div class="card-header">
+      <h3>Registro de Venta</h3>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="form-group">
+          <div class="col-sm-6">
+            <label class="form-label">Fecha Factura</label>
+            <input class="form-control form-control-sm" name="fechaFactura" #fechaFactura="ngModel" [(ngModel)]="localDate" placeholder="dd-MM-yyyy"/>
+          </div>
+          <div class="col-sm-6">
+            <label class="form-label">Numero Factura</label>
+            <input class="form-control form-control-sm" name="numeroFactura" #numeroFactura="ngModel" [(ngModel)]="service.formData.numeroFactura" readonly/>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-3">
+            <label class="form-label">Codigo Cliente</label>
+            <select class="form-select" name="Cliente" (change)="onChange()" #selCliente="ngModel" [(ngModel)]="selCliente">
+              <option name="idCliente" *ngFor="let iclient of clients" [value]="iclient">{{ iclient.codigoCliente }}</option>
+            </select>
+          </div>
+          <div class="col-sm-3">
+            <label class="form-label">Nombre Cliente</label>
+            <input class="form-control form-control-sm" type="text" name="nombreCliente" #nombreCliente="ngModel" [(ngModel)]="nombreCliente"/>
+          </div>
+          <div class="col-sm-3">
+            <label class="form-label">Direccion</label>
+            <input class="form-control form-control-sm" type="text" name="direccionCliente" #direccionCliente="ngModel" [(ngModel)]="direccionCliente"/>
+          </div>
+          <div class="col-sm-3">
+            <label class="form-label">Telefono Cliente</label>
+            <input class="form-control form-control-sm" type="text" name="telefonoCliente" #telefonoCliente="ngModel" [(ngModel)]="telefonoCliente"/>
+          </div>
+        </div>
+        <hr />
+        <div class="row align-items-end">
+          <div class="col-sm-3">
+            <label class="form-label">Nombre Producto</label>
+            <select class="form-select">
+              <option name="nombreProducto" [value]="item" *ngFor="let item of products">{{item.nombreProducto}}
+              </option>
+            </select>
+          </div>
+          <div class="col-sm-3">
+            <label class="form-label">Precio</label>
+            <input class="form-control form-control-sm" #Precio="ngModel" [(ngModel)]="formItems.precioUnitario" type="number" name="precioUnitario"  />
+          </div>
+          <div class="col-sm-3">
+            <label class="form-label">Cantidad</label>
+            <input class="form-control form-control-sm" #Cantidad="ngModel" [(ngModel)]="formItems.cantidad" type="number" name="Cantidad" />
+            <!--  -->
+          </div>
+          <div class="col-sm-3">
+
+          </div>
+        </div>
+      </div>
+      <hr />
+      <!-- venta detalle  -->
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <table class="table table-bordered table-sm" id="tbProducto">
+              <thead>
+                <tr class="table-dark">
+                  <th>Producto</th>
+                  <th>Precio</th>
+                  <th>Cantidad</th>
+                  <th>Total</th>
+                  <th>
+                    <a class="btn btn-sm btn-success text-white" (click)="Agregar(0, service.formData.idEncabezado)"><i class="fa fa-plus"></i> Agregar</a>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="service.ventaItems.length==0">
+                  <td class="font-italic text-center" colspan="5">
+                    No hay productos seleccionados.
+                  </td>
+                </tr>
+                <tr *ngFor="let item of service.ventaItems; let i=index">
+                  <td>{{ item.nombreProducto}}</td>
+                  <td>{{ item.precioUnitario}}</td>
+                  <td>{{ item.cantidad}}</td>
+                  <td>{{ item.total}}</td>
+                  <td>
+                    <a class="btn btn-sm btn-info text-white" (click)="Agregar(i,service.formData.idEncabezado)"><i class="fa fa-pencil"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- Fin detalle Formgroup -->
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <!-- <button type="submit" class="btn btn-dark"><i class="fa fa-database"></i> Submit</button> -->
+        <button class="btn btn-primary btn-sm" id="btnTerminar" type="submit" (click)="Registrar()">
+          Registrar
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+</form>
