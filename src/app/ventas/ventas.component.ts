@@ -19,6 +19,10 @@ export class VentasComponent implements OnInit {
   currentDate!: Date;
   localDate: string;
   selCliente: any;
+  nomCliente: string | undefined;
+  dirCliente: string | undefined;
+  telCliente: string | undefined;
+
 
 constructor( public service: VentasService, private formBuilder: FormBuilder)
   {
@@ -27,16 +31,20 @@ constructor( public service: VentasService, private formBuilder: FormBuilder)
     });
     this.currentDate = new Date();
     this.localDate = this.currentDate.toLocaleDateString();
+
     this.formItems = {
       idFacturaDetalle: 0,
       idFacturaEncabezado: 0,
       idProducto: 0,
-      codigoProducto: '',
       nombreProducto: '',
       precioUnitario: 0,
       cantidad: 0,
       total: 0,
-    }
+    }  
+      this.service.getClientes().subscribe(data => {
+      console.log(data)
+      this.clients=data;
+    });
   }
 
 
@@ -45,10 +53,7 @@ constructor( public service: VentasService, private formBuilder: FormBuilder)
   products!: Producto[];
 
   ngOnInit(): void {
-    this.service.getClientes().subscribe(data => {
-      console.log(data)
-      this.clients=data;
-    });
+
     this.service.getProductos().subscribe(data => {
       console.log(data)
       this.products=data;
@@ -57,9 +62,15 @@ constructor( public service: VentasService, private formBuilder: FormBuilder)
     
   }
   onChange() {
-    console.log(this.selCliente);
-    // I want to do something here with the new selectedDevice, but what I
-    // get here is always the last selection, not the one I just selected.
+    
+    var selectedId =this.selCliente;
+  
+    var ob= this.clients.find(item => item.idCliente === parseInt(selectedId));
+
+    this.nomCliente = ob?.nombreCliente;
+    this.dirCliente = ob?.direccionCliente;
+    this.telCliente = ob?.telefonoCliente;
+    console.log(ob?.nombreCliente,ob?.direccionCliente , ob?.telefonoCliente);
 }
 
   Agregar(ventaItemsIndex:number, ventaId: number){
