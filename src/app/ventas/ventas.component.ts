@@ -43,7 +43,6 @@ constructor( public service: VentasService, private formBuilder: FormBuilder)
       total: 0,
     }  
       this.service.getClientes().subscribe(data => {
-      console.log(data)
       this.clients=data;
     });
   }
@@ -56,7 +55,6 @@ constructor( public service: VentasService, private formBuilder: FormBuilder)
   ngOnInit(): void {
 
     this.service.getProductos().subscribe(data => {
-      console.log(data)
       this.products=data;
     });
     this.resetForm();
@@ -74,6 +72,7 @@ constructor( public service: VentasService, private formBuilder: FormBuilder)
 
 }
 onChangeProd(){
+  this.formItems.cantidad =0;
   var selectedProdId =this.selProd;
 
   var ob= this.products.find(item => item.idProducto === parseInt(selectedProdId));
@@ -86,9 +85,9 @@ onChangeProd(){
     var vi= ventaItemsIndex;
     var idv= ventaId;
    if(this.precioUnitario!=null && this.formItems.cantidad!=0)
-       this.formItems.total = this.precioUnitario * this.formItems.cantidad;
+       this.formItems.total = parseFloat((this.precioUnitario * this.formItems.cantidad).toFixed(2));
  }
-// Agregar(){}
+
  Registrar(){
   // form.resetForm(); form: NgForm
   // this.service.formData = {
