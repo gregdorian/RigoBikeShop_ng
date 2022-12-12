@@ -15,7 +15,7 @@ import { VentasService } from '../shared/ventas.service';
 export class VentasComponent implements OnInit {
   formv!: FormGroup;
   formData!:Venta;
-  formItems!: VentaItem;
+  formItems: VentaItem;
   currentDate!: Date;
   localDate: string;
   selCliente: any;
@@ -69,23 +69,29 @@ constructor( public service: VentasService, private formBuilder: FormBuilder)
     this.nomCliente = ob?.nombreCliente;
     this.dirCliente = ob?.direccionCliente;
     this.telCliente = ob?.telefonoCliente;
-
+   
 }
 onChangeProd(){
-  this.formItems.cantidad =0;
+
   var selectedProdId =this.selProd;
 
   var ob= this.products.find(item => item.idProducto === parseInt(selectedProdId));
-
   this.precioUnitario = ob?.precioUnitario;
+
+  if(ob!=null && ob!=undefined && this.formItems.cantidad!=0){
+
+    this.formItems.precioUnitario = ob.precioUnitario;
+    this.formItems.idProducto = selectedProdId;
+    this.formItems.nombreProducto=ob.nombreProducto;
+    this.formItems.total = parseFloat((ob.precioUnitario * this.formItems.cantidad).toFixed(2));
+  }
 
 }
 
-  Agregar(ventaItemsIndex:number, ventaId: number){
+  Agregar(ventaItemsIndex:number, ventaId: number): void{
     var vi= ventaItemsIndex;
     var idv= ventaId;
-   if(this.precioUnitario!=null && this.formItems.cantidad!=0)
-       this.formItems.total = parseFloat((this.precioUnitario * this.formItems.cantidad).toFixed(2));
+   this.service.ventaItems.push(this.formItems);
  }
 
  Registrar(){

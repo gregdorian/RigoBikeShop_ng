@@ -43,7 +43,7 @@
           <div class="col-sm-3">
             <label class="form-label">Nombre Producto</label>
             <select class="form-select" name="selProd" (change)="onChangeProd()" [(ngModel)]="selProd">
-              <option name="nombreProducto" value="{{item.idProducto}}" *ngFor="let item of products">{{item.nombreProducto}}
+              <option name="nombreProducto"  value="{{item.idProducto}}" *ngFor="let item of products">{{item.nombreProducto}}
               </option>
             </select>
           </div>
